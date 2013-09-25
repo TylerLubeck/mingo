@@ -1,0 +1,12 @@
+{
+    "name": "mingo",
+    "version": "0.0.1",
+    "dependencies": {
+        "redis-url": "x",
+        "express": "x"
+    },
+    "engines": {
+        "node": "x",
+        "npm": "x"
+    }
+}
