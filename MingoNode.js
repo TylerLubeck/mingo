@@ -15,6 +15,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
 
 var db = mongo.Db.connect(mongoUri, function(err, dbConnection) {
 	db = dbConnection;
+	db.collection('squares').drop();
 });
 
 
@@ -67,7 +68,7 @@ app.get('/possibilities', function(request, response) {
 		allData = [];
 		cursor.toArray(function(err, documents){
 			for(i in documents) {
-				html += "<li>" + documents[i].square + ' - ' + documents[i].numDrinks + 'Drinks. (Added: ' + documents[i].dateAdded + ')</li>'
+				html += "<li>" + documents[i].square + ' - ' + documents[i].numDrinks + ' Drinks. (Added: ' + documents[i].dateAdded + ')</li>'
 			}
 			html += "</ol></body></html>"
 			response.send(html);
