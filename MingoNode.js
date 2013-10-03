@@ -30,13 +30,21 @@ io.configure(function() {
 */
 
 app.post('/AddSquare', function(request, response) {
-	console.log(typeof(request.body.password));
+	console.log((request.body.password));
+	console.log(request.body.password == INSERT_PASSWORD);
+	if (request.body.password != INSERT_PASSWORD) {
+		response.send(401);
+		return;
+	}
 	if (request.body.password == INSERT_PASSWORD) {
+		console.log('worked');
 		square = request.body.square;
+		numDrinks = request.body.numDrinks;
 		db.collection('squares', function(err, collection){
 			record = new Object();
 			record.dateAdded = new Date().toDateString();
 			record.square = square;
+			record.numDrinks = numDrinks;
 			collection.insert(record, function(err, inserted){
 					if(err) {
 						response.send(400);
@@ -46,7 +54,7 @@ app.post('/AddSquare', function(request, response) {
 			});
 		});
 	}
-	response.send(401);
+	//response.send(401);
 });
 
 
@@ -59,7 +67,7 @@ app.get('/possibilities', function(request, response) {
 		allData = [];
 		cursor.toArray(function(err, documents){
 			for(i in documents) {
-				html += "<li>" + documents[i].square + ' : ' + documents[i].dateAdded + '</li>'
+				html += "<li>" + documents[i].square + ' - ' + documents[i].numDrinks + 'Drinks. (Added: ' + documents[i].dateAdded + ')</li>'
 			}
 			html += "</ol></body></html>"
 			response.send(html);
@@ -71,7 +79,6 @@ app.get('/possibilities', function(request, response) {
 app.get('/possibilities.json', function(request, response) {
 	db.collection('squares', function(err, collection) {
 		var cursor = collection.find();
-		allData = [];
 		cursor.toArray(function(err, documents){
 			response.send(JSON.stringify(documents));
 		});
