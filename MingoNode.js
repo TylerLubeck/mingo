@@ -18,6 +18,7 @@ var db = mongo.Db.connect(mongoUri, function(err, dbConnection) {
 });
 
 
+var INSERT_PASSWORD = 'SETUP';
 
 
 /*
@@ -30,7 +31,7 @@ io.configure(function() {
 
 app.post('/AddSquare', function(request, response) {
 	console.log(typeof(request.body.password));
-	if (request.body.password == "ONLYTYLER") {
+	if (request.body.password == INSERT_PASSWORD) {
 		square = request.body.square;
 		db.collection('squares', function(err, collection){
 			record = new Object();
@@ -38,13 +39,14 @@ app.post('/AddSquare', function(request, response) {
 			record.square = square;
 			collection.insert(record, function(err, inserted){
 					if(err) {
-						response.send(401);
+						response.send(400);
 					} else {
 						response.send(200);
 					}
 			});
 		});
 	}
+	response.send(401);
 });
 
 
@@ -77,7 +79,7 @@ app.get('/possibilities.json', function(request, response) {
 
 });
 
-
+/*
 app.get('/AddForm', function(reqest, response) {
 	html = '<html><head></head><body>';
 	html += '<form name="input" action="/AddSquare" method="POST">';
@@ -88,6 +90,7 @@ app.get('/AddForm', function(reqest, response) {
 
 	response.send(html);
 })
+*/
 
 /*
 app.get('/', function(request, response) {
