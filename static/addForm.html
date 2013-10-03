@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Add a Quote</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+	</head>
+	<body>
+		<form name="addQuote" method="post" id="addQuote" action="/AddSquare">
+			<input name="square" type="text" id="square">
+			<input name="password" type="password" id="password">
+			<input name="submit" type="button" value="Submit" id="submitButton">
+		</form>
+
+		<script>
+		var form = $('#submitButton');
+		form.click(function(event){
+			event.preventDefault();
+
+			var $form = $( '#addQuote' ),
+				sq = $form.find("input[name='square']" ).val(),
+				pass = $form.find("input[name='password']" ).val(),
+				url = $form.attr( "action" );
+
+			var posting = $.post(url, {square: sq, password: pass} );
+			posting.done(function(data) {
+				$('#square').empty();
+				$('#password').empty();
+			});
+
+			return false;
+
+		});
+		</script>
+	</body>
+</html>
