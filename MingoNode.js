@@ -15,7 +15,7 @@ var mongoUri = process.env.MONGOLAB_URI ||
 
 var db = mongo.Db.connect(mongoUri, function(err, dbConnection) {
 	db = dbConnection;
-	db.collection('squares').drop();
+//	db.collection('squares').drop();
 });
 
 
