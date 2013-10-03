@@ -4,8 +4,10 @@ var app = express();
 app.use(express.static(__dirname + '/static'));
 app.use(express.logger());
 app.use(express.bodyParser());
+app.engine('html', require('ejs').renderFile)
 
 app.use('/', express.static(__dirname + '/static'));
+app.set('views', __dirname + '/static');
 
 var mongo = require('mongodb');
 
@@ -31,13 +33,10 @@ io.configure(function() {
 */
 
 app.post('/AddSquare', function(request, response) {
-	console.log((request.body.password));
-	console.log(request.body.password == INSERT_PASSWORD);
 	if (request.body.password != INSERT_PASSWORD) {
 		response.send(401);
 		return;
-	}
-	if (request.body.password == INSERT_PASSWORD) {
+	} else {
 		console.log('worked');
 		square = request.body.square;
 		numDrinks = request.body.numDrinks;
@@ -62,19 +61,7 @@ app.post('/AddSquare', function(request, response) {
 
 
 app.get('/possibilities', function(request, response) {
-	var html = "<html><head></head><body><ol>"
-	db.collection('squares', function(err, collection) {
-		var cursor = collection.find();
-		allData = [];
-		cursor.toArray(function(err, documents){
-			for(i in documents) {
-				html += "<li>" + documents[i].square + ' - ' + documents[i].numDrinks + ' Drinks. (Added: ' + documents[i].dateAdded + ')</li>'
-			}
-			html += "</ol></body></html>"
-			response.send(html);
-		});
-	});
-
+	response.render('possibilities.html');
 });
 
 app.get('/possibilities.json', function(request, response) {
@@ -87,18 +74,9 @@ app.get('/possibilities.json', function(request, response) {
 
 });
 
-/*
-app.get('/AddForm', function(reqest, response) {
-	html = '<html><head></head><body>';
-	html += '<form name="input" action="/AddSquare" method="POST">';
-	html += 'Quote: <input type="text" name="square"></br>';
-	html += 'PW: <input type="password" name="password"></br>';
-	html += '<input type="submit" value="Submit">';
-	html += '</form></body></html>';
-
-	response.send(html);
+app.get('/AddForm', function(request, response){
+	response.render('addForm.html');
 })
-*/
 
 /*
 app.get('/', function(request, response) {

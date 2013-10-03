@@ -4,7 +4,8 @@
     "dependencies": {
         "mongodb": "x",
         "escape-html": "x",
-        "express": "x"
+        "express": "x",
+        "ejs": "x"
     },
     "engines": {
         "node": "x",
