@@ -56,7 +56,7 @@ function loadTable() {
 $.pnotify.defaults.delay=500;
 $.pnotify.defaults.styling='jqueryui';
 
-var socket = io.connect('http://localhost');
+var socket = io.connect('/');
 socket.on('news', function(data) {
 	$.pnotify({
 		text: data.info,
