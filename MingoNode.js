@@ -1,6 +1,8 @@
 var express = require("express");
 var escape = require('escape-html');
 var app = express();
+var http = require('http');
+
 app.use(express.static(__dirname + '/static'));
 app.use(express.logger());
 app.use(express.bodyParser());
@@ -21,16 +23,12 @@ var db = mongo.Db.connect(mongoUri, function(err, dbConnection) {
 });
 
 
+
+
+
+ 
 var INSERT_PASSWORD = 'SETUP';
 
-
-/*
-var io = require('socket.io').listen(80);
-io.configure(function() {
-    io.set("transports", ["xhr-polling"]);
-    io.set("polling duration", 10);
-});
-*/
 
 app.post('/AddSquare', function(request, response) {
 	if (request.body.password != INSERT_PASSWORD) {
@@ -84,7 +82,25 @@ app.get('/', function(request, response) {
 });
 */
 
+var server = http.createServer(app);
 var port = process.env.PORT || 5000;
-app.listen(port, function() {
+server.listen(port, function() {
     console.log("Listening on " + port);
+});
+
+
+/* BEGIN SOCKET.IO */
+
+var io = require('socket.io').listen(server);
+io.configure(function(){
+	io.set("transports", ["xhr-polling"]);
+	io.set("polling duration", 10);
+});
+
+io.sockets.on('connection', function(socket) {
+	//socket.emit('news', {hello: 'world'});
+
+	socket.on('square clicked', function(data){
+		socket.broadcast.emit('news', {info: 'somebody clicked ' + data.clicked})
+	});
 });

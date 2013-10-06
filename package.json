@@ -5,7 +5,9 @@
         "mongodb": "x",
         "escape-html": "x",
         "express": "x",
-        "ejs": "x"
+        "ejs": "x",
+        "socket.io": "x",
+        "socket.io-client": "x"
     },
     "engines": {
         "node": "x",

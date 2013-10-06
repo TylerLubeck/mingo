@@ -1,1 +1,1 @@
-web: node MingoNode.js
+web: $WEB

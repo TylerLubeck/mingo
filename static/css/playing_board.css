@@ -1,0 +1,22 @@
+body, html, table { 
+	height: 100%;
+	width: 100%;
+}
+
+td {
+	width: 20%;
+	height: 20%;
+}
+
+table,th,td {
+	border: 1px solid black;
+	text-align: center;
+}
+
+.alerts {
+
+}
+
+.clicked {
+	background-color: green;
+}
