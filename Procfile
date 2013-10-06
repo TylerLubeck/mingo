@@ -1,1 +1,1 @@
-web: node MingoApp.js
+web: node MingoNode.js
