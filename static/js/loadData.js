@@ -33,8 +33,15 @@ function loadTable() {
 			$(td).text(data[i].square);
 			$(td).click(function(e){
 				//console.log($(e.target).text());
-				$(e.target).addClass('clicked');
-				socket.emit('square clicked', {clicked: $(e.target).text() });
+				
+				if(!$(e.target).hasClass('clicked')){
+					$(e.target).addClass('clicked');
+					socket.emit('square clicked', {clicked: $(e.target).text() });
+				}
+				if(checkRow($(e.target).parent())){
+					console.log('row is complete');
+					socket.emit('mingo', {name: 'JohnnyBoy'});
+				}
 			});
 			$(tr).append(td);
 
@@ -52,6 +59,25 @@ function loadTable() {
 	});
 
 }
+
+
+
+function checkRow(row){
+	elems = $(row).children();
+	ElemsLen = elems.length;
+	for(var i = 0; i < ElemsLen; i++){
+		console.log($(elems[i]).hasClass('clicked'));
+		if(!$(elems[i]).hasClass('clicked')){
+			return false;
+		}
+		
+	}
+	console.log('returning true');
+	return true;
+
+}
+
+
 
 $.pnotify.defaults.delay=500;
 $.pnotify.defaults.styling='jqueryui';

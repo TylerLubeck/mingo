@@ -103,4 +103,8 @@ io.sockets.on('connection', function(socket) {
 	socket.on('square clicked', function(data){
 		socket.broadcast.emit('news', {info: 'somebody clicked ' + data.clicked})
 	});
+
+	socket.on('mingo', function(data){
+		socket.broadcast.emit('news', {info: data.name + ' got Mingo!'});
+	})
 });
