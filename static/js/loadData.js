@@ -81,6 +81,9 @@ function StartGame(){
 }
 
 function winner(){
+	$('td').each(function(i, ele){
+		$(ele).unbind('click');
+	});
 
 	$.pnotify({
 		title: 'Mingo!',
