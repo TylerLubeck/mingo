@@ -55,7 +55,7 @@ function StartGame(){
 	if(!localStorage.name){
 		$(centeredDiv).show();
 	} else {
-		$(centeredDiv).empty().text('Welcome Back ' + localStorage.name);
+		$(centeredDiv).empty().append($('<div id="loading"/>').text('Welcome ' + localStorage.name));
 		$(centeredDiv).show();
 		window.setTimeout(function(){
 			$(centeredDiv).fadeOut(400, function(){
@@ -69,7 +69,7 @@ function StartGame(){
 		//name = escape(name);
 		if (name.length > 0){
 			localStorage.name = name;
-			$(centeredDiv).empty().text('Loading...');
+			$(centeredDiv).empty().append($('<div id="loading"/>').text('Welcome ' + localStorage.name));
 			window.setTimeout(function(){
 				$(centeredDiv).fadeOut(400, function(){
 					loadTable();
@@ -86,7 +86,11 @@ function winner(){
 		title: 'Mingo!',
 		text: "Congratulations, " + $('<i/>').text(localStorage.name).html() + ", you've won! Click here to play again.",
 		width: 'auto',
-		hide: false
+		hide: false,
+		icon: false,
+		text_escape: true,
+		opacity: 1,
+		type: 'success'
 	}).click(function(){
 		$('#content').fadeOut("slow");
 		loadTable();
@@ -124,7 +128,7 @@ function checkRow(row){
 $.pnotify.defaults.delay=2000;
 $.pnotify.defaults.styling='jqueryui';
 
-var socket = io.connect('http://localhost');
+var socket = io.connect('/');
 socket.on('news', function(data) {
 	$.pnotify({
 		text: data.info,

@@ -1,22 +1,33 @@
 body, html, table { 
 	height: 100%;
 	width: 100%;
+	background-color: #deede4;
 }
 
 td {
+	font-family: arial;
+	color: #333;
 	width: 20%;
 	height: 20%;
+	padding: 10px;
+	background-color: #ccddcc;
+	/*border: 1px solid black;*/
+	text-align: center;
 }
 
-table,th,td {
-	border: 1px solid black;
-	text-align: center;
+#loading {
+	display: inline;
+    border: none;
+    color: #ccddcc;
+    background: transparent;
+    padding: 5px 2px 0 2px;
+    font-size: 150%;
 }
 
 .center {
 	width: auto;
 	height: 10%;
-	background-color: dodgerblue;
+	background-color: #339966;
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -26,11 +37,11 @@ table,th,td {
 	vertical-align: center;
 	text-align: center;
 	font-size: 150%;
-	color: #333;
+	color: #ccddcc;
 }
 
 .clicked {
-	background-color: green;
+	background-color: #339966;
 }
 
 a {
@@ -43,7 +54,7 @@ a:hover{
 .line {
     display: inline;
     border: none;
-    color: #333;
+    color: #ccddcc;
     background: transparent;
     border-bottom: 2px dotted black;
     padding: 5px 2px 0 2px;
@@ -59,27 +70,27 @@ a:hover{
 
 .line:hover {
 	outline: none;
-    border-color: #51CBEE;
+    border-color: #ccddcc;
     font-size: 150%;	
 }
 
 .save {
 	display: inline;
-	color: #333;
+	color: #ccddcc;
 	background: transparent;
 	border: none;
 	border-bottom: 2px dotted black;
-	/*
-	border-top: 2px dotted black;
-	border-right: 2px dotted black;
-	border-left: 2px dotted black;
-	*/
 	font-size: 150%
 }
 
-.save:hover{
+.save:hover {
 	cursor: pointer;
 	outline: none;
-    border-color: #51CBEE;
+    border-color: #ccddcc;
     font-size: 150%;
+}
+
+#notification {
+	background-color: #ccddcc;
+	color: #ccddcc;
 }
