@@ -1,5 +1,5 @@
 var express = require("express");
-var escape = require('escape-html');
+var escape = require('ent');
 var app = express();
 var http = require('http');
 
@@ -105,6 +105,7 @@ io.sockets.on('connection', function(socket) {
 	});
 
 	socket.on('mingo', function(data){
-		socket.broadcast.emit('news', {info: data.name + ' got Mingo!'});
+		var name = (escape.encode(data.name));
+		socket.broadcast.emit('news', {info: name + ' got Mingo!'});
 	})
 });

@@ -7,9 +7,15 @@
 		<link href="css/jquery.pnotify.default.css" rel="stylesheet"/>
 	</head>
 	<body>
-		<div id="content"></div>
+		<div id="content">
+			<div id="EnterName" class="center">
+				<input id="name" class="line" placeholder="Enter a Name"/>
+				<button id="NameSaveButton" class="save">Save</button>
+			</div>
+		</div>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.js"></script>
+		<script src="js/getColumnIndex.js"></script>
 		<script src="socket.io/socket.io.js"></script>
 		<script src="js/jquery.pnotify.min.js"></script>
 		<script src="js/loadData.js"></script>

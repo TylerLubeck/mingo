@@ -13,10 +13,73 @@ table,th,td {
 	text-align: center;
 }
 
-.alerts {
-
+.center {
+	width: auto;
+	height: 10%;
+	background-color: dodgerblue;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	vertical-align: center;
+	text-align: center;
+	font-size: 150%;
+	color: #333;
 }
 
 .clicked {
 	background-color: green;
+}
+
+a {
+	text-transform: uppercase;
+}
+a:hover{
+	text-transform: lowercase;
+}
+
+.line {
+    display: inline;
+    border: none;
+    color: #333;
+    background: transparent;
+    border-bottom: 2px dotted black;
+    padding: 5px 2px 0 2px;
+    font-size: 150%;
+
+}
+ 
+.line:focus {
+    outline: none;
+    border-color: #51CBEE;
+    font-size: 150%;
+}
+
+.line:hover {
+	outline: none;
+    border-color: #51CBEE;
+    font-size: 150%;	
+}
+
+.save {
+	display: inline;
+	color: #333;
+	background: transparent;
+	border: none;
+	border-bottom: 2px dotted black;
+	/*
+	border-top: 2px dotted black;
+	border-right: 2px dotted black;
+	border-left: 2px dotted black;
+	*/
+	font-size: 150%
+}
+
+.save:hover{
+	cursor: pointer;
+	outline: none;
+    border-color: #51CBEE;
+    font-size: 150%;
 }
