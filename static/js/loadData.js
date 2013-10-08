@@ -161,7 +161,7 @@ function shuffle(array) {
 $.pnotify.defaults.delay=2000;
 $.pnotify.defaults.styling='jqueryui';
 
-var socket = io.connect('/');
+var socket = io.connect('http://localhost');
 socket.on('news', function(data) {
 	$.pnotify({
 		text: data.info,
