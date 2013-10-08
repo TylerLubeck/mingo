@@ -1,6 +1,7 @@
 function loadTable() {
 	$.get('/possibilities.json', function(data){
 		data = JSON.parse(data);
+		data = shuffle(data);
 		var table = $('<table></table>');
 		var tr = $('<tr></tr>');
 		var xPos = 0;
@@ -27,7 +28,6 @@ function loadTable() {
 			$(td).click(function(e){
 				if(!$(e.target).hasClass('clicked')){
 					$(e.target).addClass('clicked');
-					//socket.emit('square clicked', {clicked: $(e.target).text() });
 				}
 
 				if(checkColumn($(e.target)) || checkRow($(e.target).parent())){
@@ -51,17 +51,18 @@ function loadTable() {
 }
 
 function StartGame(){
-	var centeredDiv = $('#EnterName').hide();
+	var centeredDiv = $('#EnterName')
 	if(!localStorage.name){
-		$(centeredDiv).show();
+		$(centeredDiv).removeClass('hidden');
 	} else {
 		$(centeredDiv).empty().append($('<div id="loading"/>').text('Welcome ' + localStorage.name));
-		$(centeredDiv).show();
+		$(centeredDiv).removeClass('hidden');
 		window.setTimeout(function(){
 			$(centeredDiv).fadeOut(400, function(){
 				loadTable();
 			});
 		}, 1000);
+		socket.emit('new user', {name: localStorage.name});
 		return;
 	}
 	var EnterButton = $('#NameSaveButton').text('Save').click(function(e){
@@ -75,9 +76,16 @@ function StartGame(){
 					loadTable();
 				});
 			}, 1000);
+			socket.emit('new user', {name: localStorage.name});
 		}
 		
-	})
+	});
+
+	$('#name').keydown(function (e){
+		if(e.keyCode == 13){
+			$(EnterButton).click();
+		}
+	});
 }
 
 function winner(){
@@ -128,15 +136,47 @@ function checkRow(row){
 	return true;
 }
 
+function shuffle(array) {
+  var currentIndex = array.length
+    , temporaryValue
+    , randomIndex
+    ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 $.pnotify.defaults.delay=2000;
 $.pnotify.defaults.styling='jqueryui';
 
-var socket = io.connect('/');
+var socket = io.connect('http://localhost');
 socket.on('news', function(data) {
 	$.pnotify({
 		text: data.info,
 		animation: 'show',
 		icon: 'picon picon-flag-green'
+	});
+});
+
+socket.on('add user', function(data){
+	console.log('new user!');
+	$.pnotify({
+		text: data.info,
+		animation: 'show',
+		icon: false,
+		width: 'auto'
 	});
 });
 

@@ -15,6 +15,10 @@ td {
 	text-align: center;
 }
 
+.hidden {
+	display:none;
+}
+
 #loading {
 	display: inline;
     border: none;
@@ -64,7 +68,7 @@ a:hover{
  
 .line:focus {
     outline: none;
-    border-color: #51CBEE;
+    border-color: #ccddcc;
     font-size: 150%;
 }
 

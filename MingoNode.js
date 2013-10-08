@@ -107,5 +107,10 @@ io.sockets.on('connection', function(socket) {
 	socket.on('mingo', function(data){
 		var name = (escape.encode(data.name));
 		socket.broadcast.emit('news', {info: name + ' got Mingo!'});
+	});
+
+	socket.on('new user', function(data){
+		var name = escape.encode(data.name);
+		socket.broadcast.emit('add user', {info: name + ' joined the game.'});
 	})
 });
