@@ -112,5 +112,20 @@ io.sockets.on('connection', function(socket) {
 	socket.on('new user', function(data){
 		var name = escape.encode(data.name);
 		socket.broadcast.emit('add user', {info: name + ' joined the game.'});
-	})
+	});
+
+    socket.on('winner', function(data){
+        var name = escape.encode(data.name);
+        var d = new Date();
+        var proof = data.proof;
+		db.collection('squares', function(err, collection){
+			record = new Object();
+			record.name = name;
+			record.date = d;
+			record.proof = proof;
+			collection.insert(record, function(err, inserted){
+			    console.log('Inserted winner: ' + proof);
+            });
+		});
+    });
 });

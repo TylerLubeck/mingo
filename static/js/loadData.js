@@ -89,7 +89,19 @@ function StartGame(){
 }
 
 function winner(){
-	$('td').each(function(i, ele){
+	html2canvas(document.body, {
+        onrendered: function(canvas) {
+            var imageURL = canvas.toDataURL();
+            console.log(imageURL);
+            socket.emit('winner', {
+                    name: localStorage.name,
+                    proof: imageURL
+                    }
+            );
+        }
+    });
+
+    $('td').each(function(i, ele){
 		$(ele).unbind('click');
 	});
 

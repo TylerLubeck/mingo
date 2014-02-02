@@ -36,7 +36,7 @@ function loadPossibilities() {
 
 
 		$(button).click(function(e){
-			event.preventDefault();
+			e.preventDefault();
 
 			var $form = $( '#addQuote' ),
 				sq = $form.find("input[name='square']" ).val(),
