@@ -19,7 +19,9 @@
 	<body>
 		<form name="addQuote" method="post" id="addQuote" action="/AddSquare">
 			Quote: <input name="square" type="text" id="square"></br>
-			Number of Drinks: <input name = "numDrinks" type="text" id="numDrinks"></br>
+            <div class='hidden'>
+			Number of Drinks: <input name = "numDrinks" type="text" value='1' id="numDrinks"></br>
+            </div>
 			Password : <input name="password" type="password" id="password"></br>
 			<input name="submit" type="button" value="Submit" id="submitButton">
 		</form>
