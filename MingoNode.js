@@ -24,9 +24,6 @@ var db = mongo.Db.connect(mongoUri, function(err, dbConnection) {
 
 
 
-
-
- 
 var INSERT_PASSWORD = 'SETUP';
 
 
@@ -118,7 +115,7 @@ io.sockets.on('connection', function(socket) {
         var name = escape.encode(data.name);
         var d = new Date();
         var proof = data.proof;
-		db.collection('squares', function(err, collection){
+		db.collection('winners', function(err, collection){
 			record = new Object();
 			record.name = name;
 			record.date = d;
