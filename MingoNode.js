@@ -23,8 +23,38 @@ var db = mongo.Db.connect(mongoUri, function(err, dbConnection) {
 });
 
 
+var Manager = new function() {
+    this._clients = [];
+    this.clients = function() {
+        return this._clients;
+    }
+
+    this.set = function(client, data) {
+        this._clients[client.sessionId] = data;
+        return this.count();
+    };
+
+    this.get = function(client) {
+        return this._clients[client.sessionId];
+    };
+
+    this.remove = function(client) {
+        var i = this._clients.indexOf(client);
+        delete this._clients[i];
+        return this.count();
+    };
+
+    this.count = function() {
+        return Object.keys(this._clients).length;
+    }
+}
+
+
+var SocketManager = Object.create(Manager); 
 
 var INSERT_PASSWORD = 'SETUP';
+var CONNECTED_USERS = 0;
+
 
 
 app.post('/AddSquare', function(request, response) {
@@ -94,8 +124,12 @@ io.configure(function(){
 	io.set("polling duration", 10);
 });
 
+
+
 io.sockets.on('connection', function(socket) {
 	//socket.emit('news', {hello: 'world'});
+    
+    CONNECTED_USERS++;        
 
 	socket.on('square clicked', function(data){
 		socket.broadcast.emit('news', {info: 'somebody clicked ' + data.clicked})
@@ -108,7 +142,13 @@ io.sockets.on('connection', function(socket) {
 
 	socket.on('new user', function(data){
 		var name = escape.encode(data.name);
-		socket.broadcast.emit('add user', {info: name + ' joined the game.'});
+        SocketManager.set(socket, name);
+        console.log('Current players: ' +  SocketManager.count())
+        console.log(SocketManager.clients());
+		socket.broadcast.emit('add user', {
+                                info: name + ' joined the game.',
+                                numPlayers: SocketManager.count()
+                                });
 	});
 
     socket.on('winner', function(data){
@@ -125,4 +165,21 @@ io.sockets.on('connection', function(socket) {
             });
 		});
     });
+
+    socket.on('disconnect', function(){
+        var name = SocketManager.get(socket);
+        var count = SocketManager.remove(socket);
+        socket.broadcast.emit('remove user', {
+                                'info': name,
+                                'numPlayers': count
+        });
+    });
 });
+
+/*
+io.sockets.on('disconnect', function(socket) {
+    CONNECTED_USERS --;
+    console.log('disconnect');
+    console.log(CONNECTED_USERS);
+});
+*/

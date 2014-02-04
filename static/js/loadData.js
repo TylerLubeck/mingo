@@ -184,8 +184,19 @@ socket.on('news', function(data) {
 
 socket.on('add user', function(data){
 	console.log('new user!');
+    var txt = data.info + '\n' + 'Current Count: ' + data.numPlayers + ' players.';
 	$.pnotify({
-		text: data.info,
+		text: txt,
+		animation: 'show',
+		icon: false,
+		width: 'auto'
+	});
+});
+
+socket.on('remove user', function(data){
+    var txt = data.info + ' left the game.\n' + 'Current Count: ' + data.numPlayers + ' players.';
+	$.pnotify({
+		text: txt,
 		animation: 'show',
 		icon: false,
 		width: 'auto'
