@@ -52,7 +52,7 @@ var Manager = new function() {
 
 var SocketManager = Object.create(Manager); 
 
-var INSERT_PASSWORD = 'SETUP';
+var INSERT_PASSWORD = process.env.INSERT_PASSWORD;
 var CONNECTED_USERS = 0;
 
 
